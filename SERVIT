@@ -1,0 +1,313 @@
+#!/usr/bin/env python
+
+########################
+# ALL RIGHTS RESERVED 
+#
+# (c)2015
+#
+# MIT LICENSE
+#
+# V 0.1
+#
+# Contributors:
+#	aerth
+#	b3rtL
+#
+########################
+from os import system
+import curses, sys, traceback, os, lib
+import lib
+from lib import functions
+
+def main():
+    try:   
+
+        x = 0
+        while x != ord('q'):
+           
+             os.system("reset")
+             #x = screen.getch()
+             screen = curses.initscr()
+             screen.clear()
+             screen.border(0)
+             #screen.start_color()
+             #curses.init_pair(1,curses.COLOR_RED, curses.COLOR_WHITE)
+             #screen.keypad(1)
+             pos = 2
+
+             #curr_y, curr_x = screen.getyx()
+             #next_y, next_x = get_next_direction()
+             #screen.move(next_y, next_x)
+             screen.refresh()
+
+             x = 3
+             screen.addstr(1,2, "EARTHBOT SERVIT", curses.A_STANDOUT)
+             screen.addstr(2,2, "Please choose your journey...  ", curses.A_BOLD)         
+             screen.addstr(4, 2, "1 - Install Dependencies")
+             screen.addstr(5, 2, "2 - Restart Apache")
+             screen.addstr(6, 2, "3 - Show disk free")
+             screen.addstr(7, 2, "4 - Show disk usage")
+             screen.addstr(8, 2, "5 - Show mounted spaces")
+             screen.addstr(9, 2, "6 - TCPDUMP (network sniff)")
+             screen.addstr(10, 2, "7 - Create Apache VHost")
+             screen.addstr(11, 2, "8 - Create Email Address")
+             screen.addstr(12, 2, "9 - Change Email Password")
+             screen.addstr(13, 2, "` - Create Subdomain")
+             screen.addstr(14, 2, "w - Backup Website")
+             screen.addstr(15, 2, "e - Backup All Websites")
+             screen.addstr(16, 2, "r - ASCII art")
+             screen.addstr(17, 2, "t - Web Browser (text)")
+             screen.addstr(18, 2, "y - Add a new user (ssh + user_dir)")
+             screen.addstr(19, 2, "u - Clone new Bolt")
+
+             screen.addstr(4, 40, "a - SSH Connect")
+             screen.addstr(5, 40, "s - SCP Push")
+             screen.addstr(6, 40, "d - SCP Pull")
+             screen.addstr(7, 40, "f - Sudo ZSH Install")
+             screen.addstr(8, 40, "g - Oh My ZSH (zsh mod)")
+             screen.addstr(9, 40, "h - Install Composer (php)")
+             
+             screen.addstr(11, 40, "j - Enable UFW")
+             screen.addstr(12, 40, "k - Allow 80")
+             screen.addstr(13, 40, "l - Allow 22")
+             screen.addstr(14, 40, "; - Allow Other")
+             screen.addstr(15, 40, "/ - Deny Other")
+             screen.addstr(11, 58, "J - Disable UFW")
+             screen.addstr(12, 58, "K - Default DENY")
+             screen.addstr(13, 58, "L - UFW Status")
+             screen.addstr(14, 58, ": - Whitelist IP")
+             screen.addstr(15, 58, "? - Blacklist IP")
+             #screen.addborder(16,44,23,61)
+             screen.addstr(17, 40, "z - Check users")
+             screen.addstr(18, 40, "x - http logs")
+             screen.addstr(19, 40, "c - Multitail 1")
+             screen.addstr(20, 40, "v - Multitail 2")
+             screen.addstr(21, 40, "b - Block IP")
+             screen.addstr(22, 40, "n - Block Host")
+ 
+             screen.addstr(17, 58, "m - sudo htop")
+             screen.addstr(18, 58, ", - htop")
+             screen.addstr(19, 58, ". - sudo last")
+             screen.addstr(20, 58, "! - os.system upgrade")
+             screen.addstr(21, 58, "@ - ps au")
+             screen.addstr(22, 58, "# - End Process")
+             
+             screen.keypad(1)
+             screen.addstr(2, 50, "Press q or CTRL + C to Exit")
+             screen.addstr(3, 50, "Version 0.1")
+             s = curses.newwin(1, 15, 2, 8)
+             s.box()
+             #screen.refresh()
+        
+             x = screen.getch()
+             if x == ord('y'):
+                  screen.refresh()
+                  #screen.border()
+                  
+                  file_menu = ("File", "file_func()")
+                  proxy_menu = ("Proxy Mode", "proxy_func()")
+                  doit_menu = ("Do It!", "doit_func()")
+                  help_menu = ("Help", "help_func()")
+                  exit_menu = ("Exit", "EXIT")
+                  # Add the topbar menus to screen object
+                  topbar_menu((file_menu, proxy_menu, doit_menu, help_menu, exit_menu))
+
+                  username = functions.get_param("Enter the username")
+                  homedir = functions.get_param("Enter the home directory, eg /home/deploy")
+                  groups = functions.get_param("Enter comma-separated groups, eg adm,dialout,cdrom")
+                  shell = functions.get_param("Enter the shell, eg /bin/bash:")
+                  curses.endwin()
+                  functions.execute_cmd("sudo useradd -d " + homedir + " -g 1000 -G " + groups + " -m -s " + shell + " " + username)
+             if x == ord('2'):
+                  curses.endwin()
+                  functions.execute_cmd("sudo service apache2 restart")
+             if x == ord('3'):
+                  curses.endwin()
+                  functions.execute_cmd("sudo df | less")
+             if x == ord('4'):
+                  curses.endwin()
+                  functions.execute_cmd("sudo ncdu .")
+             if x == ord('5'):
+                  curses.endwin()
+                  functions.execute_cmd("mount | less")  
+             if x == ord('6'):
+                  iface = functions.get_param("Which network interface? (eth0 or wlan0 ?)")
+                  curses.endwin()
+                  functions.execute_cmd("sudo tcpdump -vv -i " + iface )      
+             if x == ord('7'):
+                  sitedomain = functions.get_param("Enter the domain name (example.com)")
+                  curses.endwin()
+                  functions.execute_cmd("sudo a2createsite " + sitedomain)        
+             if x == ord('8'):
+                  user = functions.get_param("_______@earthbot.net")
+                  password = functions.get_param("Password (enter SHA512-CRYPTED version!)")
+                  curses.endwin()
+                
+                  functions.execute_cmd("mysql mailserver -e \'INSERT INTO virtual_users (id, domain_id, password, email) VALUES (\"\",\"1\",\"" + password + "\",\"" + user + "@earthbot.net\");\'")
+             if x == ord('9'):
+                  curses.endwin()
+                  functions.execute_cmd("doveadm pw -s SHA512-CRYPT")
+             if x == ord('`'):
+                  domainname = functions.get_param("Enter MAIN domain name: example.com")
+                  subdomain = functions.get_param("Enter new hostname (sub.example.com enter sub)")
+                  confirm = functions.get_param("Are you sure? Creating: " + subdomain + "." + domainname)
+                  curses.endwin()
+                  if confirm == "yes":
+                       functions.execute_cmd("echo making " + subdomain + "." + domainname)          
+             if x == ord('w'):
+                  backupsite = get_params("If site is located in /srv/live/example.com/public_html/","Enter only: example.com")
+                  confirm = functions.get_param("Are you sure? backing up /srv/live/" + backupsite)
+                  curses.endwin()
+                  if confirm == "yes":
+                       functions.execute_cmd("echo tar czf /tmp/backup_" + backupsite + ".tar.gz /srv/live/" + backupsite + "/public_html")          
+                 
+             if x == ord('e'):
+                  confirm = functions.get_param("Are you sure? backing up /srv/live/")
+                  curses.endwin()
+                  if confirm == "yes":
+                       functions.execute_cmd("sudo tar czf -p /tmp/backup_allsites.tar.gz /srv/live/")          
+
+             if x == ord('w'):
+                  confirm = functions.get_param("Are you sure? backing up /srv/live/")
+                  curses.endwin()
+                  if confirm == "yes":
+                       functions.execute_cmd("echo tar czf -p /tmp/backup_allsites.tar.gz /srv/live/")          
+                 
+                  #execute_cmd("sudo ncdu .")
+             if x == ord('r'):
+                  banner = functions.get_param("Enter text to change into art")
+                  curses.endwin()
+                  functions.execute_cmd("figlet " + banner)
+             if x == ord('t'):
+                  url = functions.get_param("Enter URL to surf to")
+                  curses.endwin()
+                  functions.execute_cmd("w3m " + url)
+             if x == ord('1'):
+                  confirm = get_params("Downloading and installing dependencies!","Are you sure? Installing PHP, Apache2, \n        php-gd , composer, enabling a2mod rewrite \n        type yes")
+                  curses.endwin()
+                  if confirm == "yes":
+                       functions.execute_cmd("sudo apt-get install php5 apache2 php5-gd libapache2-mod-php5 git wget curl zsh figlet ufw ncdu tree multitail")          
+                       functions.execute_cmd("sudo a2enmod rewrite; sudo service apache restart")          
+               
+             if x == ord('u'):
+                  boltclone = functions.get_param("Clone Bolt Where?")
+                  confirm = functions.get_param("Are you sure? Cloning bolt to: " + boltclone)
+                  curses.endwin()
+                  if confirm == "yes":
+                       functions.execute_cmd("sudo mv " + boltclone + "/index.html /tmp/index.html")
+                       functions.execute_cmd("sudo chown ")
+                       functions.execute_cmd("git clone /usr/share/bolt-skel/ " + boltclone)          
+             if x == ord('a'):
+                  hostname = functions.get_param("SSH to Server: [hostname]")
+                  username = functions.get_param("SSH to Server: [username]")
+                  xfor = functions.get_param("SSH to Server: [x-forwarding] (yes/no)")
+                  port = functions.get_param("SSH to Server: [port]")
+                  identity = functions.get_param("SSH to Server: [path to: public key]")
+                  curses.endwin()
+                  if xfor == "yes":
+                       xfora = " -X "
+                  else:
+                       xfora = " "
+                  if identity == "":
+                       identitya = ""
+                  else:
+                       identitya == " -i " + identity
+                  if port == "":
+                       porta = ""
+                  else:
+                       porta = " -p " + port
+                  functions.execute_cmd("ssh " + xfora + username + "@" + hostname + porta + identitya + " -v")
+             if x == ord('s'):
+                  hostname = functions.get_param("SCP to Server: [hostname]")
+                  username = functions.get_param("SCP to Server: [username]")
+                  port = functions.get_param("SCP to Server: [port]")
+                  identity = functions.get_param("SCP to Server: [path to: public key]")
+                  filesend = functions.get_param("SCP to Server: [files to send]")
+                  curses.endwin()
+                  if identity == "":
+                       identitya = ""
+                  else:
+                       identitya == " -i " + identity
+                  if port == "":
+                       porta = ""
+                  else:
+                       porta = " -P " + port + " "
+                  functions.execute_cmd("scp -v " + porta + filesend + " " + username + "@" + hostname + ":~/ " + identitya)
+             if x == ord('f'):
+                  functions.execute_cmd("sudo apt-get install zsh") 
+             if x == ord('g'):        
+                  functions.execute_cmd("curl -L https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh | sh")  
+             if x == ord('h'):    
+                  functions.execute_cmd("curl -sS https://getcomposer.org/installer | php")      
+             if x == ord('j'):
+                  functions.execute_cmd("sudo service ufw start") 
+             if x == ord('k'):
+                  functions.launch_cmd("sudo ufw allow 80;sudo service ufw restart") 
+             if x == ord('l'):
+                  functions.launch_cmd("sudo ufw allow 22;sudo service ufw restart") 
+             if x == ord(';'):
+                  portallow = functions.get_param("Which port to allow? (careful!)")
+                  functions.launch_cmd("sudo ufw allow " + portallow) 
+             if x == ord('/'):
+                  portallow = functions.get_param("Which port to deny? (careful!)")
+                  functions.execute_cmd("sudo ufw deny " + portallow)
+             if x == ord('K'):
+                  functions.execute_cmd("sudo service ufw stop") 
+             if x == ord('K'):
+                  functions.execute_cmd("sudo ufw default DENY") 
+             if x == ord('L'):
+                  functions.execute_cmd("sudo ufw status") 
+             if x == ord(':'):
+                  whiteallow = functions.get_param("Which IP to whitelist? (careful!)")
+                  functions.execute_cmd("sudo ufw allow from " + whiteallow) 
+                  functions.execute_cmd("sudo echo \" + whiteallow + \" >> /etc/hosts.allow")
+             if x == ord('?'):
+                  blackdeny = functions.get_param("Which IP to blacklist? (careful!)")
+                  functions.execute_cmd("sudo ufw deny from " + blackdeny)
+                  functions.execute_cmd("sudo echo \" + blackdeny + \" >> /etc/hosts.deny")
+             if x == ord('z'):
+                  functions.execute_cmd("sudo who | less")                     
+             if x == ord('x'): 
+                  functions.execute_cmd("sudo tail -f /var/log/apache2/access.log | less")
+             if x == ord('c'): 
+                  functions.execute_cmd("sudo multitail -f /var/log/apache2/access.log /var/log/apache2/other-vhosts-access.log /var/log/apache2/error.log")
+
+             if x == ord('v'): 
+                  functions.execute_cmd("sudo multitail -f /var/log/auth.log /var/log/dmesg.log /var/log/fail2ban.log /var/log/ufw.log")             
+             if x == ord('m'): 
+                  functions.execute_cmd("sudo htop")
+             if x == ord(','): 
+                  functions.execute_cmd("htop")
+             if x == ord('.'): 
+                  functions.execute_cmd("sudo last | less")
+             if x == ord('!'): 
+                  functions.execute_cmd("sudo apt-get update; sudo apt-get upgrade -y")
+             if x == ord('@'): 
+                  functions.execute_cmd("sudo ps aux | less")
+             if x == ord('#'):
+                  endit = functions.get_param("What is the name of the process to end?")
+                  functions.execute_cmd("sudo pkill " + endit)
+
+        curses.endwin()
+    except KeyboardInterrupt:
+        print "\n Have a Grateful Day! :D \n"
+    except Exception:
+        traceback.print_exc(file=sys.stdout)
+    os.system('reset')
+   
+
+if __name__ == "__main__":
+    main()
+
+# # # # 
+# To list installed packages and install from list.
+# # # #
+#  dpkg --get-selections >my-installed-apps.txt
+#  avail=`mktemp`
+#  apt-cache dumpavail >"$avail"
+#  dpkg --merge-avail "$avail"
+#  rm "$avail"
+#  dpkg --clear-selections
+#  dpkg --set-selections <my-installed-apps.txt
+#  apt-get dselect-upgrade
+#
