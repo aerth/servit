@@ -41,7 +41,7 @@ def main():
              screen.refresh()
 
              x = 3
-             screen.addstr(1,2, "EARTHBOT SERVIT", curses.A_STANDOUT)
+             screen.addstr(1,2, "SERVIT v0.1", curses.A_STANDOUT)
              screen.addstr(2,2, "Please choose your journey...  ", curses.A_BOLD)         
              screen.addstr(4, 2, "1 - Install Dependencies")
              screen.addstr(5, 2, "2 - Restart Apache")
