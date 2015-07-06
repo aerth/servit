@@ -66,3 +66,7 @@ Debian or Ubuntu. SSH access (at least). Python + Ncurses. Includes Dependency I
 
 aerth@isupon.us (email)
 
+### Future Releases ###
+
+Next release will have support for Red Hat, CentOS, and Arch servers.
+If you know how that works, go ahead and do it. Pull requests are welcome.

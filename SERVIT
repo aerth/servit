@@ -7,9 +7,9 @@
 #
 # MIT LICENSE
 #
-# V 0.1
+# SERVIT VERSION 1.070515
 #
-# Contributors: aerth b3rtL 
+# Contributors: aerth 
 #
 ########################
 
@@ -184,11 +184,12 @@ def main():
                   curses.endwin()
                   execute_cmd("sudo a2createsite " + sitedomain)        
              if x == ord('8'):
-                  user = get_param("_______@earthbot.net")
-                  password = get_param("Password (enter SHA512-CRYPTED version!)")
+                  user = get_param("\n\t Enter the first part of the email address only. \n\t For example for \"john@example.com\" you would enter here: \"john\" \n\t_______ @nextstep.com")
+                  domain = get_param(user + "@____________")
+                  password = get_param("Password (enter SHA512-CRYPTED version! Use #9 to create a password.)")
                   curses.endwin()
                 
-                  execute_cmd("mysql mailserver -e \'INSERT INTO virtual_users (id, domain_id, password, email) VALUES (\"\",\"1\",\"" + password + "\",\"" + user + "@earthbot.net\");\'")
+                  execute_cmd("mysql mailserver -e \'INSERT INTO virtual_users (id, domain_id, password, email) VALUES (\"\",\"1\",\"" + password + "\",\"" + user + "@" + domain + "\");\'")
              if x == ord('9'):
                   curses.endwin()
                   execute_cmd("doveadm pw -s SHA512-CRYPT")
