@@ -2,8 +2,6 @@
 
 
 ```
-#!shell
-
  ____  _____ ______     _____ _____ 
 / ___|| ____|  _ \ \   / /_ _|_   _|
 \___ \|  _| | |_) \ \ / / | |  | |  
@@ -18,8 +16,6 @@ MIT LICENSE
 Contributors:
 
 aerth
-b3rtL
-
 
 ### CLI interface for Debian/Ubuntu server management, including support for: ###
 
@@ -37,8 +33,6 @@ b3rtL
 
 * Clone it!
 ```
-#!shell
-
 git clone https://github.com/aerth/servit.git
 
 ```
@@ -48,8 +42,6 @@ git clone https://github.com/aerth/servit.git
 
 
 ```
-#!shell
-
 cp ./other/a2createsite /usr/sbin/
 chmod +x SERVIT
 cat ./README.md | less;cat ./SERVIT | less; ./SERVIT
@@ -74,6 +66,3 @@ Debian or Ubuntu. SSH access (at least). Python + Ncurses. Includes Dependency I
 
 aerth@isupon.us (email)
 
-* team contact
-
-b3rtL@earthbot.net (email)
