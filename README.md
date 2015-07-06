@@ -28,7 +28,7 @@ aerth
 * Super CLI Menu
 
 
-### How do I get set up? (Developing) ###
+### How do I get set up? ###
 
 
 * Clone it!
@@ -38,24 +38,29 @@ git clone https://github.com/aerth/servit.git
 ```
 
 
+* Install it!
+
+
+```
+sudo cp ./dependencies/a2createsite /usr/local/bin/
+sudo cp ./SERVIT /usr/local/bin/
+chmod +x /usr/local/bin/SERVIT
+chmod +x /usr/local/bin/a2createsite
+
+```
+
 * Run it!
 
-
 ```
-cp ./other/a2createsite /usr/sbin/
-chmod +x SERVIT
-cat ./README.md | less;cat ./SERVIT | less; ./SERVIT
-
+SERVIT
 ```
-
 
 * Dependencies
-Debian or Ubuntu. SSH access (at least). Python + Ncurses. Includes Dependency Installer to get the most out of this script. wget or curl required, and automatically installed if not already present.
+a2createsite. Debian or Ubuntu (more linux servers coming soon). Superuser. Python + Ncurses. 
 
 
 ### Contributing? ###
 
-* Write tests
 * Review code
 * Make sure your changes didn't break the app
 * Describe changes in git commits
