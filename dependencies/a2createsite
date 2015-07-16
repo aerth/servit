@@ -1,13 +1,20 @@
 #!/bin/bash
+# MIT LICENSE
+# CONTRIBUTORS:
+#	aerth@isupon.us ( http://critter.space )
+# Contribute @ https://github.com/aerth/a2createsite !
+
     VHOST_CONF=/etc/apache2/sites-available/
     ROOT_UID=0
     NOTROOT=87
     WWW_ROOT=/srv/live/
-[ $# -eq 0 ] && { echo "Usage: $0 domain.name [/path/with/slash/]" ; echo "Help: sudo a2createsite -h"; exit 1; }
+    [ $# -eq 0 ] && { echo "Usage: $0 domain.name [/path/with/slash/]" ; echo "Help: sudo a2createsite -h"; exit 1; }
     echo ""
     echo "[The Long Lost a2createsite]"
+    echo "[Contrib @ github.com/aerth/a2createsite]"
+    echo "[You are using version 1.0 (now for Debian 8 and Ubuntu]"
     echo ""
-    if [ $1 = "-h" ]
+    if [ $1 = '-h' ]
             then
             echo "HELP MODE"
 	    echo ""
@@ -24,14 +31,16 @@
             echo $HELP
 	    exit
     fi
-
-    if [ $2 = "-d" ]
+if [ $2 ]
+then
+    if [ $2 = '-d' ]
             then
             echo "deleting $1"
             sudo a2dissite $1
             sudo rm /etc/apache2/sites-available/$1
             exit
     fi
+fi
     # owner of the site directory
     WEBUSER=www-data
     # check if is root
@@ -58,6 +67,15 @@
     CONF="<VirtualHost *:80>\n\n\tServerName $DOMAIN\n\tServerAlias www.$DOMAIN\n\tDocumentRoot ${WWW_ROOT}$DOMAIN/public_html\n\n\t<Directory ${WWW_ROOT}$DOMAIN/public_html>\n\t\tOrder Deny,Allow\n\t\tAllow from all\n\t\tOptions -Indexes\n\t\tAllowOverride All\n\t</Directory>\n\n</VirtualHost>"
     HOSTEDIT="127.0.0.1    $DOMAIN"
     # write the vhost config file
+    # Updated for Ubuntu and Debian 8! (Still works for Debian 7. Please pull request if you got it working on CentOS/RedHat)
+    count=`ls -1 ${VHOST_CONF}*.conf 2>/dev/null | wc -l`
+    if [ $count != 0 ]
+            then
+            echo -e $CONF > ${VHOST_CONF}$DOMAIN.conf
+            
+    else
+            echo -e $CONF > ${VHOST_CONF}$DOMAIN
+    fi
     echo -e $CONF > ${VHOST_CONF}$DOMAIN
     echo "Adding $DOMAIN to /etc/hosts so you may visit http://$DOMAIN in your browser. :D"
     echo $HOSTEDIT >> /etc/hosts
@@ -67,7 +85,6 @@
     echo "$DOMAIN was created. In 5 seconds your apache will be reloaded"
     sleep 5
     /etc/init.d/apache2 reload
+    #alternate: sudo service apache2 reload
     echo "Done"
     exit 0
-
-
