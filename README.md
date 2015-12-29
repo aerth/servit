@@ -24,7 +24,7 @@ aerth
 * EASY SSH / SCP
 * ASCII ART
 * Add User
-* Easy to add your favorite scripts
+* *Easy to add your favorite scripts*
 * Super CLI Menu
 
 
@@ -70,8 +70,8 @@ a2createsite. Debian or Ubuntu (more linux servers coming soon). Superuser. Pyth
 * Repo admin
 
 aerth@isupon.us (email)
+critter@earthbot.net (jabber)
 
 ### Future Releases ###
 
-Next release will have support for Red Hat, CentOS, and Arch servers.
-If you know how that works, go ahead and do it. Pull requests are welcome.
+Arch is at https://github.com/aerth/arch-servit
